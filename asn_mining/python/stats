@@ -170,8 +170,9 @@ with open("ripe_asn_info.json", 'w') as f:
     
 print("Calculating all asns for alls countries...")
 all_asns = dict()
-for asn, value in country_asns_ripe.items():
-    all_asns[value] = asn
+for key, value in country_asns_ripe.items():
+    for asn in value:
+        all_asns[asn] = key
 for asn, value in found_in_ripe_stats.items():
     all_asns[asn] = value['country']
 
