@@ -1,0 +1,7 @@
+.devcontainer
+.github
+delegated*
+nro-delegated*
+latest-bview*
+as-numbers*
+*.json
