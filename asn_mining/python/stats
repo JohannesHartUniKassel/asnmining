@@ -133,7 +133,7 @@ for country in country_asns_ripe:
         }
         
 with open("inverted_ripe_stats_index.json", 'w') as f:
-    json.dump(sorted(inverted_ripe_stats_index), f, indent=4)
+    json.dump({key: value for key, value in sorted(inverted_ripe_stats_index.items(), key=lambda item: item[0])}, f, indent=4)
         
 not_found_in_ripe_stats = set()
 inverted_ripe_stats_index_keys = inverted_ripe_stats_index.keys()
@@ -147,7 +147,7 @@ with open("not_found_in_ripe_stats.json", 'w') as f:
 found_in_ripe_stats = {key: inverted_ripe_stats_index[key] for key in dif_bgp_nro if key not in not_found_in_ripe_stats}
 
 with open("found_in_ripe_stats.json", 'w') as f:
-    json.dump(sorted(found_in_ripe_stats), f, indent=4)
+    json.dump({key: value for key, value in sorted(found_in_ripe_stats.items(), key=lambda item: item[0])}, f, indent=4)
 
 print("Downloading ASN info from RIPE NCC STATS...")
 ripe_asn_info = dict()
@@ -166,7 +166,7 @@ for asn in not_found_in_ripe_stats:
         
 
 with open("ripe_asn_info.json", 'w') as f:
-    json.dump(sorted(ripe_asn_info), f, indent=4)
+    json.dump({key: value for key, value in sorted(ripe_asn_info.items(), key=lambda item: item[0])}, f, indent=4)
     
 print("Calculating all asns for alls countries...")
 all_asns = dict()
@@ -177,7 +177,7 @@ for asn, value in found_in_ripe_stats.items():
     all_asns[asn] = value['country']
 
 with open("all_asns.json", 'w') as f:
-    json.dump(sorted(all_asns), f, indent=4)
+    json.dump({key: value for key, value in sorted(all_asns.items(), key=lambda item: item[0])}, f, indent=4)
 
 all_countries = dict()
 for key, value in country_asns_ripe.items():
