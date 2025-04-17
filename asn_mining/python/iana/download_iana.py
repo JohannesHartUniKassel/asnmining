@@ -1,5 +1,5 @@
 from resources import IANA_16_BIT_URL, IANA_16_BIT_FILE, IANA_32_BIT_FILE, IANA_32_BIT_URL
-from stats import download
+from util.downloader import download
 
 def download_iana():
     i16 = download(IANA_16_BIT_URL, IANA_16_BIT_FILE)
