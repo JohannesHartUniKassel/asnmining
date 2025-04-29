@@ -1,3 +1,5 @@
+import os
+
 BGP_URL = "https://data.ris.ripe.net/rrc00/latest-bview.gz"
 NRO_DELEGATED_STATS_URL = "https://ftp.ripe.net/pub/stats/ripencc/nro-stats/latest/nro-delegated-stats"
 RIPE_STATS_URL = "https://ftp.ripe.net/pub/stats/ripencc/delegated-ripencc-extended-latest"
@@ -20,4 +22,4 @@ IANA_16_BIT_URL = "https://www.iana.org/assignments/as-numbers/as-numbers-1.csv"
 IANA_32_BIT_URL = "https://www.iana.org/assignments/as-numbers/as-numbers-2.csv"
 
 IANA_16_BIT_FILE = "as-numbers-1.csv"
-IANA_32_BIT_FILE = "as-numbers-2.csv"
+IANA_32_BIT_FILE = os.environ.get("IANA_32_BIT_FILE", "as-numbers-2.csv")
