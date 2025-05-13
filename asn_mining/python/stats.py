@@ -30,6 +30,7 @@ def stats(download_files=True, bgp_cache=False):
     print("NRO delegated stats")
     nro_result = analyze_nro.analyze_nro_delegated(nro)
     nro_result_keys = set(nro_result['asn'].unique())
+    nro_result_keys_assigned = set(nro_result[nro_result['status'] == 'assigned']['asn'].unique())
     dump_df_to_file(nro_result, "nro.json")
 
     print("APNIC delegated stats")
@@ -86,9 +87,21 @@ def stats(download_files=True, bgp_cache=False):
     
     for key, value in dif_bgp_nro_rir.items():
         dif_bgp_nro_rir[key] = sorted(value, key=lambda x: int(x))
-    
+
     with open("dif_bgp_nro_rir.json", 'w') as f:
         json.dump(dif_bgp_nro_rir, f, indent=4)
+    
+    dif_bgp_nro_assigned = bgp_result['all_asns'] - nro_result_keys_assigned
+    
+    dif_bgp_nro_rir_assigned = dict()
+    for asn in dif_bgp_nro_assigned:
+        responsible_rir = iana_range_map.get_value(int(asn))
+        if dif_bgp_nro_rir_assigned.get(responsible_rir) is None:
+            dif_bgp_nro_rir_assigned[responsible_rir] = list()
+        dif_bgp_nro_rir_assigned[responsible_rir].append(asn)
+    
+    with open("dif_bgp_nro_rir_assigned.json", 'w') as f:
+        json.dump(dif_bgp_nro_rir_assigned, f, indent=4)
 
     dif_bgp_arin_cache = bgp_result['all_asns'] - arin_result_keys
     dif_bgp_arin = set()
